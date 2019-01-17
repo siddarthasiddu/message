@@ -29,7 +29,7 @@ app.get('/',(req,res)=>{
   res.render('home/index.ejs');
 });
 
-// app.use(express.static('public'));
+app.use(express.static('public'));
 
 server.listen(port);
 
