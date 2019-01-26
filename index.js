@@ -37,4 +37,7 @@ server.listen(port);
 
 io.on("connection",function(socket){
   console.log("SocketConnection Establised");
+  socket.on('message',function(msg){
+    io.emit("message",msg);
+  });
 });
