@@ -1,0 +1,22 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <div id="hashValue" style=""><%= hash %></div>
+    From : <div id="from"><%= from %></div>
+    <br/>To: <div id="to"><%= to %></div>
+    <li id="messages">
+      
+    </li>
+
+    <div style="position:fixed;bottom:0">
+      <input id="inputMsg"></input>
+      <button id="sendMsgBtn">Send</button>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>  
+    <!-- <script src="http://yournodeserver/socket.io/socket.io.js"></script> -->
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script src="/static/js/friendchat.js"></script>
+  </body>
+</html>

@@ -1,8 +1,9 @@
 var socket = io('http://localhost:3000');
 console.log("naruot");
 
+var channelName = $("#hashValue").val();
 
-socket.on('message',function(msg){
+socket.on(channelName,function(msg){
   var li = document.getElementById("messages");
   var ul = document.createElement("ul");
   ul.textContent = msg;
@@ -12,6 +13,6 @@ socket.on('message',function(msg){
 $("#sendMsgBtn").on('click',function(e){
   var msg = $("#inputMsg").val();
   $("#inputMsg").val('');
-  socket.emit('message',msg);
+  socket.emit(channelName,msg);
 
 })
