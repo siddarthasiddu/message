@@ -5,6 +5,8 @@ var importantMethods = require('./important_methods');
 var path = require('path');
 var HomeRoutes = express.Router();
 
+var socketHelper = require('./../helpers/socket_helper');
+
 // var io = require('./../server.js');
 // console.log(app);
 // var server = require('http').createServer(app);
@@ -24,29 +26,18 @@ HomeRoutes.get('/',function(req,res){
 });
 
 HomeRoutes.get('/chat/:username',function(req,res){
+    
     var users = [];
     userPromise = importantMethods.currentUser(req);
     userPromise.then(function(user){
         users[0] = user.username;
         users[1] = req.params.username;
-        
-
 
         var channelHash = importantMethods.channelHash(users);
         console.log("channel hash "+channelHash+"      "+users[0]+"     "+users[1]);
 
-        console.log("**********************************");
-        console.log(io);
-        console.log("**********************************");
-        io.of('/chat').on("connection",function(socket){
-            console.log("SocketConnection Establised");
-
-            socket.on(channelHash,function(msg){
-                console.log("Fffcccccc "+msg+"  "+channelHash);
-            io.of('/chat').emit(channelHash,msg);
-            });
-        });
-
+        socketHelper.create_chat_channel(channelHash);
+        
         res.render('home/friendchat',{hash: channelHash,from: user.username,to: req.params.username})
     });
     

@@ -44,6 +44,16 @@ app.use('/',HomeRoutes.HomeRoutes);
 //   console.log("Connectons Established");
 // });
 
+
+// io.of('/chat').on("connection",function(socket){
+//   console.log("SocketConnection Establised");
+
+//   socket.on(channelHash,function(msg){
+//       console.log("Fffcccccc "+msg+"  "+channelHash);
+//       io.of('/chat').emit(channelHash,msg);
+//   });
+// });
+
 // app.listen(port);
 http.listen(port, "127.0.0.1");
 
