@@ -16,14 +16,14 @@ HomeRoutes.get('/',function(req,res){
     var friends_promise = userHelper.get_friends(email);
 
     friends_promise.then(function(friends){
-        console.log(friends[0].myfriend.username);
+        console.log("ljsdhfjkshdfjkhsdjkfhasjkdfhjkasdhfhsfd");
+        // console.log(friends[0].myfriend.username);
         var friends_arr = [];
-        for(var i=0;i<friends.length;i = i+1){
-            friends_arr += friends[i].myfriend; 
-        }
-        console.log(friends_arr);
-        console.log("fcckckk");
-        res.render('home/index',{user_email: email,friends: friends_arr});
+        // console.log(friends.length);
+        // console.log(friends_arr.length);
+        // console.log(friends[0].myfriend);
+        // console.log(friends[0].myfriend.constructor.name);
+        res.render('home/index',{user_email: email,friends_row: friends});
     });
 
     

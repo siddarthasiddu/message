@@ -19,7 +19,7 @@ exports.get_friends = function(email){
     });
     console.log(matched_users_promise);
     matched_users_promise.then(function(users){
-
+      console.log(users.length+"   "+users);
       if(users.length > 0){
         user = users[0];
 
@@ -37,14 +37,18 @@ exports.get_friends = function(email){
         });
       
         friends_relation.then(function(rows){
-
-          if(rows.length > 0){
-            resolve(rows);
-          }
-          else{
-            resolve([]);
-          }
+          console.log(":nartuioio;iui");
+          resolve(rows);
+          // if(rows.length > 0){
+          //   resolve(rows);
+          // }
+          // else{
+          //   resolve(null);
+          // }
         });
+      }
+      else{
+        resolve(null);
       }
     });
   });
