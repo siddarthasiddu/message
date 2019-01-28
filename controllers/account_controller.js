@@ -5,7 +5,7 @@ var path = require('path');
 var session = require('express-session');
 var models = require('../models');
 var Sequelize = require('sequelize');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 
 var accountRoutes = express.Router();

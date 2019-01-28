@@ -34,7 +34,7 @@ exports.channelHash = function(users){
   var usersString = '';
   users.sort();
   for(var i=0;i<users.length;i++){
-    usersString += users[i]; 
+    usersString += "_"+users[i]; 
   }
   return md5(usersString);
 }

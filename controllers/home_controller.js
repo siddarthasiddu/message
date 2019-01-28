@@ -6,23 +6,27 @@ var path = require('path');
 var HomeRoutes = express.Router();
 
 var socketHelper = require('./../helpers/socket_helper');
-
-// var io = require('./../server.js');
-// console.log(app);
-// var server = require('http').createServer(app);
-// var io = require('socket.io')(server);
-
+var userHelper = require('./../helpers/user_helper');
 
 var correct_path = path.join(__dirname+'/../views/home/');
-// var scripts_path = path.join(__dirname+'/../public/js/');
-HomeRoutes.get('/',function(req,res){
-    // res.send("Naruto");
-    let siddu = "ohh shit";
-    let email = req.session.email;
-    
-    // res.render('home/index',{"scripts_path":scripts_path}); 
 
-    res.render('home/index',{user_email: email});
+HomeRoutes.get('/',function(req,res){
+    
+    let email = req.session.email;
+    var friends_promise = userHelper.get_friends(email);
+
+    friends_promise.then(function(friends){
+        console.log(friends[0].myfriend.username);
+        var friends_arr = [];
+        for(var i=0;i<friends.length;i = i+1){
+            friends_arr += friends[i].myfriend; 
+        }
+        console.log(friends_arr);
+        console.log("fcckckk");
+        res.render('home/index',{user_email: email,friends: friends_arr});
+    });
+
+    
 });
 
 HomeRoutes.get('/chat/:username',function(req,res){
