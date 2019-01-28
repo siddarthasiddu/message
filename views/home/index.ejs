@@ -3,9 +3,9 @@
   </head>
   <body>
     <% for(var i=0;i<friends_row.length;i++){ %>
-      <% var friend = friends_row[0].myfriend %>
+      <% var friend = friends_row[i].myfriend %>
       <div><%= friend.username +"   "+friend.email +"   "+friend.id %></div>
-      <a href="<%= '/chat/' + friend.username %>">friend.username</a>  
+      <a href="<%= '/chat/' + friend.username %>"><%= friend.username %></a>  
     <% } %>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>    <script src="/socket.io/socket.io.js"></script>
