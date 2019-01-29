@@ -6,6 +6,7 @@ var session = require('express-session');
 var models = require('../models');
 var Sequelize = require('sequelize');
 const bcrypt = require('bcryptjs');
+var user_helper = require('./../helpers/user_helper');
 
 
 var accountRoutes = express.Router();
@@ -65,8 +66,6 @@ accountRoutes.post('/register',function(req,res){
         
     });
     matched_users_promise.then(function(users){
-        //  
-        //  
         if(users.length == 0){
             const passwordHash = bcrypt.hashSync(req.body.password,10);
             models.User.create({
@@ -74,11 +73,8 @@ accountRoutes.post('/register',function(req,res){
                 email: req.body.email,
                 password: passwordHash
             }).then(function(){
-                //  
                 let newSession = req.session;
                 newSession.email = req.body.email;
-                //  
-                // res.redirect('/',{user_email: newSession.email});
                 res.redirect('/');
             });
         }
@@ -100,6 +96,25 @@ accountRoutes.get('/logout',function(req,res){
           }
         });
     }
+});
+
+accountRoutes.get('/user/:username',function(req,res){
+    var user_promise = models.User.findAll({
+        where:{
+            username: req.params.username
+        }
+    });
+
+    user_promise.then(function(users){
+        var user = undefined;
+        if(users.length > 0){
+            user = users[0];
+            var friends_promise = user_helper.get_friends(user.email);
+            friends_promise.then(function(friends){
+                res.render('account/user',{user: user,friends_row: friends});
+            });
+        }
+    });
 });
 
 module.exports = {"AccountRoutes" : accountRoutes};
