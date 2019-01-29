@@ -98,23 +98,5 @@ accountRoutes.get('/logout',function(req,res){
     }
 });
 
-accountRoutes.get('/user/:username',function(req,res){
-    var user_promise = models.User.findAll({
-        where:{
-            username: req.params.username
-        }
-    });
-
-    user_promise.then(function(users){
-        var user = undefined;
-        if(users.length > 0){
-            user = users[0];
-            var friends_promise = user_helper.get_friends(user.email);
-            friends_promise.then(function(friends){
-                res.render('account/user',{user: user,friends_row: friends});
-            });
-        }
-    });
-});
 
 module.exports = {"AccountRoutes" : accountRoutes};

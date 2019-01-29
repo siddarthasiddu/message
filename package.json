@@ -7,6 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "db:migrate": "node_modules/.bin/sequelize db:migrate",
     "model:generate": "node_modules/.bin/sequelize model:generate --name Friend --attributes user_id:integer,friend_id:integer,channel_hash:string",
+    "post":"node_modules/.bin/sequelize model:generate --name Post --attributes user_id:integer,content:string,privacy:integer",
+    "comments":"node_modules/.bin/sequelize model:generate --name Comment --attributes user_id:integer,content:string,post_id:integer",
+    "likes":"post":"node_modules/.bin/sequelize model:generate --name Like --attributes user_id:integer,type:string,parent_id:integer",
     "db:create": "node_modules/.bin/sequelize db:create",
     "start": "node server.js"
   },

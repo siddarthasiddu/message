@@ -4,7 +4,7 @@ var ejs = require('ejs');
 var importantMethods = require('./important_methods');
 var path = require('path');
 var HomeRoutes = express.Router();
-
+var models = require('../models');
 var socketHelper = require('./../helpers/socket_helper');
 var userHelper = require('./../helpers/user_helper');
 
@@ -49,6 +49,27 @@ HomeRoutes.get('/chat/:username',function(req,res){
     
     
 });
+
+
+HomeRoutes.get('/user/:username',function(req,res){
+    var user_promise = models.User.findAll({
+        where:{
+            username: req.params.username
+        }
+    });
+
+    user_promise.then(function(users){
+        var user = undefined;
+        if(users.length > 0){
+            user = users[0];
+            var friends_promise = userHelper.get_friends(user.email);
+            friends_promise.then(function(friends){
+                res.render('home/user',{user: user,friends_row: friends});
+            });
+        }
+    });
+});
+
 
 
 module.exports = {"HomeRoutes" : HomeRoutes};

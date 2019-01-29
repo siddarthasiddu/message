@@ -51,10 +51,11 @@
             <div>
               <% for(var i=0;i<friends_row.length;i++){ %>
                 <% var friend = friends_row[i].myfriend %>
-                <!-- <div><%= friend.username +"   "+friend.email +"   "+friend.id %></div> -->
+
                 <div>
                   <a href="<%= '/chat/' + friend.username %>"><%= friend.username %></a>  
-                </div>
+                </div>  
+                            
               <% } %>
             </div>
             
