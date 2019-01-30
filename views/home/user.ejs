@@ -27,10 +27,56 @@
 
           <% include ../partials/header %>
 
-    <div class="" style="width:100%;font-size:14px" >
-      <div class="row" style="width:100%">
+    <div class="" style="width:100%;font-size:14px;margin-top:40px" >
+      <div class="row" style="width:100%;margin-left:0px;">
 
-        <div class="col-lg-2 col-xl-2 d-none d-lg-block" style="padding-left: 0px;border-right:1px solid #e1e4e8!important;padding-right:0px">
+        <div id="userprofile" class="" style="width:60%;margin:0 auto;background-color:white;border: 1px solid #e1e4e8;padding:15px 0px 15px 0px">    
+          <div class="image-cropper" style="margin:0 auto">
+            <img src="http://3.bp.blogspot.com/-cBTxqyiPXv4/U2pOt-m2CYI/AAAAAAAAANU/tLLH_hD6BD8/s1600/HD+Wallpapers+-+wallpaper+hd+1080p,+wallpaper+hd+download,+wallpaper+hd+iphone+5,+wallpaper+hd+for+mobile,+wallpaper+hd+app,+wallpaper+hd+cars,+iphone+4+wallpaper+hd,+ipad+wallpape.jpg" class="rounded" />
+          </div>
+          <br>
+          <div class="text-bold" style="text-align: center;margin:0 auto">
+            <h1><%= user.username %></h1>
+          </div>
+          <div style="text-align: center;font-weight: 400;padding-bottom:5px;margin:0 auto">
+            <div><%= user.email %></div>
+          </div>        
+          <div id="status" style="border-bottom:1px solid #e1e4e8!important;padding:0% 5% 15px 5%;margin:0 auto;width:95%">
+            <div><%= user.status %><%= user.status %></div>
+          </div>
+          <div id="posts_friends_count" class="row"  style="margin-top:15px">
+            <div id="posts_count" style="width:30%;margin-left:20%;text-align: center">
+              <h4>1</h4> 
+            </div>
+            <div id="friends_count" style="width:30%;text-align: center">
+              <h4>2</h4> 
+            </div>
+          </div>
+          <div id="posts_friends_count" class="row">
+            <div id="posts_count" style="width:30%;margin-left:20%;text-align: center;">
+              <h4>Posts</h4>
+            </div>
+            <div id="friends_count" style="width:30%;text-align: center">
+              <h4>Friends</h4>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- <div class="col-lg-2 col-xl-2 d-none d-lg-block" style="padding-left: 0px;border-right:1px solid #e1e4e8!important;padding-right:0px">
           <div class="leftpane" >
 
 
@@ -61,7 +107,7 @@
             
           </div>
           
-        </div>
+        </div> -->
 
       </div>
     </div>
