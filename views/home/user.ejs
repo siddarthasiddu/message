@@ -25,7 +25,7 @@
     
   <body style="width:100%;    background-color: #F6F8FA;" >
 
-          <% include ../partials/header %>
+          <%- include('./../partials/header',{user: user}) %>
 
     <div class="" style="width:100%;font-size:14px;margin-top:40px" >
       <div class="row" style="width:100%;margin-left:0px;">
@@ -65,9 +65,22 @@
         <% for(var i=0;i<posts.length;i=i+1) {%>
           <% var post = posts[i] %>
           <div id="userprofile" class="" style="width:60%;margin:10 auto;background-color:white;border: 1px solid #e1e4e8;padding:15px 15px 15px 15px;">    
-           <div style="font-weight: 600"><%= user.username %></div>
-           <div style="font-size:10px"><%= post.createdAt.toLocaleString() %></div>
-           <h4 style="margin-bottom:0px;margin-top:5px"><%= post.title %></h4>
+            <div class="row" style="margin-bottom:15px">
+              <div>
+                  <div class="image-cropper" style="margin:0 auto;height:40px;width:40px;margin-left:10px;margin-right:10px">
+                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj5GtJ1ndkXb1l4QSGefsh4DRrW7VHFNNBZI6wqXrU8kDmJxex" class="rounded" />
+                  </div>
+              </div>
+                
+              <div>
+                  <div style="font-weight: 600"><%= user.username %></div>
+                  <div style="font-size:10px"><%= post.createdAt.toLocaleString() %></div>
+              </div>
+                
+            </div>
+            
+           
+           <h4 style="margin-bottom:0px;margin-top:5px;font-weight: 550 !important"><%= post.title %></h4>
            <div><%= post.content %></div>
           </div>
         

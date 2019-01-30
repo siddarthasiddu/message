@@ -14,13 +14,14 @@ HomeRoutes.get('/',function(req,res){
     
     let email = req.session.email;
     var friends_promise = userHelper.get_friends(email);
-
-    friends_promise.then(function(friends){
-        console.log("ljsdhfjkshdfjkhsdjkfhasjkdfhjkasdhfhsfd");
-        var friends_arr = [];
-        res.render('home/index',{user_email: email,friends_row: friends});
-    });
-
+    var user_promise = importantMethods.currentUser(req);
+    user_promise.then(function(user){
+        friends_promise.then(function(friends){
+            console.log("ljsdhfjkshdfjkhsdjkfhasjkdfhjkasdhfhsfd");
+            var friends_arr = [];
+            res.render('home/index',{user_email: email,user: user,friends_row: friends});
+        });
+    })
     
 });
 
