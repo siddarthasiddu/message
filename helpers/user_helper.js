@@ -39,17 +39,27 @@ exports.get_friends = function(email){
         friends_relation.then(function(rows){
           console.log(":nartuioio;iui");
           resolve(rows);
-          // if(rows.length > 0){
-          //   resolve(rows);
-          // }
-          // else{
-          //   resolve(null);
-          // }
         });
       }
       else{
         resolve(null);
       }
+    });
+  });
+}
+
+exports.get_posts = function(user){
+  return new Promise(function(resolve,reject){
+    var posts_promise = models.Post.findAll({
+      where:{
+        user_id: user.id
+      }
+    })
+
+    posts_promise.then(function(posts){
+      resolve(posts);
+    }).catch(function(e){
+      resolve(null);
     });
   });
 }

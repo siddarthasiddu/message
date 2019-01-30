@@ -59,7 +59,14 @@ HomeRoutes.get('/user/:username',function(req,res){
             user = users[0];
             var friends_promise = userHelper.get_friends(user.email);
             friends_promise.then(function(friends){
-                res.render('home/user',{user: user,friends_row: friends});
+                var posts_promise = userHelper.get_posts(user);
+                posts_promise.then(function(posts){
+                    res.render('home/user',{user: user,friends_row: friends,posts: posts});
+                }).catch(function(e){
+                    res.redirect('/');
+                });
+            }).catch(function(e){
+                res.redirect('/');
             });
         }
     });
