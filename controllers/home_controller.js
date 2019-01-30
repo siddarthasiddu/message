@@ -17,12 +17,7 @@ HomeRoutes.get('/',function(req,res){
 
     friends_promise.then(function(friends){
         console.log("ljsdhfjkshdfjkhsdjkfhasjkdfhjkasdhfhsfd");
-        // console.log(friends[0].myfriend.username);
         var friends_arr = [];
-        // console.log(friends.length);
-        // console.log(friends_arr.length);
-        // console.log(friends[0].myfriend);
-        // console.log(friends[0].myfriend.constructor.name);
         res.render('home/index',{user_email: email,friends_row: friends});
     });
 
@@ -67,6 +62,27 @@ HomeRoutes.get('/user/:username',function(req,res){
                 res.render('home/user',{user: user,friends_row: friends});
             });
         }
+    });
+});
+
+HomeRoutes.post('/createpost',function(req,res){
+    console.log("**************************");
+    console.log(req.session.email);
+    console.log("**************************");
+    var user_promise = importantMethods.currentUser(req);
+    user_promise.then(function(user){
+        console.log(req.body);
+        console.log("title+ "+ req.body.post_title);
+        console.log("content+ "+ req.body.post_body);
+        models.Post.create({
+            user_id: user.id,
+            content: req.body.post_body,
+            title: req.body.post_title,
+        }).then(function(post){
+            res.redirect('/');
+        }).catch(function(e){
+            res.redirect('/')
+        });
     });
 });
 

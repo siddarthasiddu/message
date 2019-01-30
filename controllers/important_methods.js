@@ -15,8 +15,9 @@ exports.currentUser = function(req){
         ),
       });
       matched_users_promise.then(function(users){
+        console.log("++++++++++++" +users.length+"   ++++++");
         if(users.length > 0){
-          let user = users[0];
+          var user = users[0];
           // return user;
           resolve( user );
         }

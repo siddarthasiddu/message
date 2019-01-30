@@ -38,7 +38,20 @@
         </div>
 
         <div class="col-lg-8 col-xl-8 col- middlepane col-md-8 col-xs-8">
-
+          <div style="background-color:white;padding: 25px 15px 15px 15px;border-radius: 15px;border:1px solid #e1e4e8!important">
+            <form id="rendered-form" style="width:95%;margin: 0 auto" action="/createpost" method="post">
+              <div class="rendered-form">
+                <div class="fb-text form-group" style="width:70%">
+                  <input type="text" class="form-control" name="post_title" id="text-1548844752865" placeholder="title">
+                </div>
+                <div class="fb-textarea form-group ">
+                  <textarea type="textarea" class="form-control" name="post_body" id="textarea-1548844754498" placeholder="post content"></textarea>
+                </div>
+                <input type="submit" value="Create Post" onclick="msg()" class="btn" style="background-color: #24292E;color:white">
+              </div>
+            </form>
+          </div>
+          
         </div>
 
         <div class="col-lg-2 col-xl-2 rightpane col-md-4 col-xs-4">
