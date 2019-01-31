@@ -53,7 +53,7 @@ HomeRoutes.get('/user/:username',function(req,res){
             username: req.params.username
         }
     });
-
+   
     user_promise.then(function(users){
         var user = undefined;
         if(users.length > 0){
@@ -62,7 +62,12 @@ HomeRoutes.get('/user/:username',function(req,res){
             friends_promise.then(function(friends){
                 var posts_promise = userHelper.get_posts(user);
                 posts_promise.then(function(posts){
-                    res.render('home/user',{user: user,friends_row: friends,posts: posts});
+                    var current_user = importantMethods.currentUser(req);
+                    current_user.then(function(current_user){
+                        res.render('home/user',{user: user,friends_row: friends,posts: posts,current_user: current_user});                
+                    }).catch(function(e){
+                        res.redirect('/');
+                    });
                 }).catch(function(e){
                     res.redirect('/');
                 });

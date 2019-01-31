@@ -25,7 +25,7 @@
     
   <body style="width:100%;    background-color: #F6F8FA;" >
 
-          <%- include('./../partials/header',{user: user}) %>
+          <%- include('./../partials/header',{user: current_user}) %>
 
     <div class="" style="width:100%;font-size:14px;margin-top:40px" >
       <div class="row" style="width:100%;margin-left:0px;">
@@ -59,6 +59,11 @@
             <div id="friends_count" style="width:30%;text-align: center">
               <h4>Friends</h4>
             </div>
+          </div>
+          <div id="friend_related" class="" style="margin-top:15px">
+            <% if(current_user.username != user.username){ %> 
+              <button style="width:100%" class="btn btn-dark">Send Friend Request </button>
+            <% } %>
           </div>
         </div>
 

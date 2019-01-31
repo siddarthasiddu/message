@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       content: {
-        type: Sequelize.STRING(64534)
+        type: Sequelize.STRING(20845)
       },
       privacy: {
         type: Sequelize.INTEGER
