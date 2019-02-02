@@ -39,6 +39,7 @@ accountRoutes.post('/login',function(req,res){
             let passwordHash = user.password;
             if(bcrypt.compareSync(req.body.password,passwordHash)){
                 req.session.email = req.body.email;
+                req.session.user_id = user.id;
                 // res.redirect('/',{user_email: req.body.email});
                 res.redirect('/');
             }
@@ -72,9 +73,10 @@ accountRoutes.post('/register',function(req,res){
                 username: req.body.username,
                 email: req.body.email,
                 password: passwordHash
-            }).then(function(){
+            }).then(function(user){
                 let newSession = req.session;
                 newSession.email = req.body.email;
+                newSession.user_id = user.id;
                 res.redirect('/');
             });
         }

@@ -100,5 +100,76 @@ HomeRoutes.post('/createpost',function(req,res){
 });
 
 
+HomeRoutes.get('/getFriendsPost',function(req,res){
+    var index = req.params.index;
+    console.log(" index  "+req.params.index);
+    var user_promise
+});
+
+HomeRoutes.get('/getUserPost',function(req,res){
+    var username = req.query.username;
+    var index = req.query.index;
+    console.log("**************************");
+    console.log(req.query);
+    console.log("***************");
+    var limit = 10;
+    var offset = limit * (index - 1);
+    var user_id = req.session.user_id;
+    // var user_promise = models.User.findAll({
+
+    var post_promise = models.Post.findAll({
+        where: {
+            user_id: user_id
+        },
+        limit: limit,
+        offset: offset
+    });
+
+    post_promise.then(function(posts){
+        res.send([posts,{username: username}]);
+    });
+
+});
+
+HomeRoutes.get('/getHomePagePosts',function(req,res){
+    var username = req.query.username;
+    var index = req.query.index;
+    console.log("**************************");
+    console.log(req.query);
+    console.log("***************");
+    var limit = 10;
+    var offset = limit * (index - 1);
+    var user_id = req.session.user_id;
+
+    var friends_promise  = userHelper.get_friends(req.session.email);
+    friends_promise.then(function(friends){
+        var users_arr = [];
+        users_arr[0] = {'user_id': user_id};
+        for(var i=0;i<friends.length;i++){
+            users_arr[i+1]={'user_id': friends[i].myfriend.id};
+        }
+
+        post_promise = models.Post.findAll({
+            where: {
+                $or: users_arr
+            },
+            limit: limit,
+            offset: offset,
+            include: [{
+                model: models.User,
+                as: 'user'
+            }]
+        });
+
+        post_promise.then(function(posts){
+            // res.send(posts);
+            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
+            console.log(posts[0]);
+            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
+            res.send([posts,{username: username}]);
+        })
+    });
+});
+
 
 module.exports = {"HomeRoutes" : HomeRoutes};

@@ -1,21 +1,21 @@
 {
   "development": {
     "username": "root",
-    "password": "Hyderabad007",
+    "password": "root",
     "database": "message_development",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": "Hyderabad007",
+    "password": "root",
     "database": "message_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
-    "password": "Hyderabad007",
+    "password": "root",
     "database": "message_production",
     "host": "127.0.0.1",
     "dialect": "mysql"
