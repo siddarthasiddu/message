@@ -63,3 +63,25 @@ exports.get_posts = function(user){
     });
   });
 }
+
+exports.are_friends = function(user_id,friend_id){
+  return new Promise(function(resolve,reject){
+    var friend_promise = models.Friend.findAll({
+      where: {
+        user_id: user_id,
+        friend_id: friend_id
+      }
+    });
+
+    friend_promise.then(function(relation){
+      if(relation.length > 0 ){
+        resolve(true)
+      }
+      else{
+        resolve(false)
+      }
+    }).catch(function(e){
+      resolve(false)
+    })
+  });
+}

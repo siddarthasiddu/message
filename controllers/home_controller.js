@@ -7,6 +7,7 @@ var HomeRoutes = express.Router();
 var models = require('../models');
 var socketHelper = require('./../helpers/socket_helper');
 var userHelper = require('./../helpers/user_helper');
+var Sequelize = require('sequelize');
 
 var correct_path = path.join(__dirname+'/../views/home/');
 
@@ -64,7 +65,10 @@ HomeRoutes.get('/user/:username',function(req,res){
                 posts_promise.then(function(posts){
                     var current_user = importantMethods.currentUser(req);
                     current_user.then(function(current_user){
-                        res.render('home/user',{user: user,friends_row: friends,posts: posts,current_user: current_user});                
+                        var is_friend_promise = userHelper.are_friends(current_user.id,user.id);
+                        is_friend_promise.then(function(relation){
+                            res.render('home/user',{user: user,friends_row: friends,posts: posts,current_user: current_user,is_friend: relation});
+                        });
                     }).catch(function(e){
                         res.redirect('/');
                     });
@@ -114,25 +118,37 @@ HomeRoutes.get('/getUserPost',function(req,res){
     console.log("***************");
     var limit = 10;
     var offset = limit * (index - 1);
-    var user_id = req.session.user_id;
+    // var user_id = req.session.user_id;
     // var user_promise = models.User.findAll({
-
-    var post_promise = models.Post.findAll({
+    var user_promise = models.User.findAll({
         where: {
-            user_id: user_id
-        },
-        limit: limit,
-        offset: offset
+            username: username
+        }
     });
 
-    post_promise.then(function(posts){
-        res.send([posts,{username: username}]);
+    user_promise.then(function(users){
+        if(users.length>0){
+            let user = users[0];
+
+            var post_promise = models.Post.findAll({
+                where: {
+                    user_id: user.id
+                },
+                limit: limit,
+                offset: offset
+            });
+
+            post_promise.then(function(posts){
+                res.send([posts,{username: username}]);
+            });
+        }
     });
+
 
 });
 
 HomeRoutes.get('/getHomePagePosts',function(req,res){
-    var username = req.query.username;
+    var currentuser_id = req.session.user_id;
     var index = req.query.index;
     console.log("**************************");
     console.log(req.query);
@@ -158,17 +174,139 @@ HomeRoutes.get('/getHomePagePosts',function(req,res){
             include: [{
                 model: models.User,
                 as: 'user'
+            },
+            {
+                model: models.Like,
+                as: 'likes',
+                // on: { '$Post.id$' : {$col: 'Like.parent_id'}}
             }]
         });
 
         post_promise.then(function(posts){
             // res.send(posts);
             console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
-            console.log(posts[0]);
+            console.log(posts);
             console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
-            res.send([posts,{username: username}]);
+            res.send([posts,{currentuser_id: currentuser_id}]);
         })
     });
+});
+
+HomeRoutes.get('/search',function(req,res){
+    var search_query_name = req.query.keyword;
+    // console.log("*********************************")
+    // console.log(req.body);
+    // console.log(req.query);
+    // console.log("*********************************")
+    var search_results_promise = models.User.findAll({
+        where: {
+            $or: [
+                {
+                    'username': {
+                        // $iLike: `%${search_query_name}%`
+                        [Sequelize.Op.like]: `%${search_query_name}%`  
+                    }
+                },
+                {
+                    'firstname': {
+                        // $iLike: `%${search_query_name}%`
+                        [Sequelize.Op.like]: `%${search_query_name}%`  
+
+                    }
+                },
+                {
+                    'lastname': {
+                        // $iLike: `%${search_query_name}%`
+                        [Sequelize.Op.like]: `%${search_query_name}%`  
+
+                    }
+                }
+                ,
+                {
+                    'email': {
+                        // $iLike: `%${search_query_name}%`
+                        [Sequelize.Op.like]: `%${search_query_name}%`  
+
+                    }
+                }
+                
+            ]  
+        }
+    });
+
+    search_results_promise.then(function(users){
+        res.render('home/search',{'users': users});
+    })
+
+});
+
+HomeRoutes.get('/likepost',function(req,res){
+    console.log(req);
+    console.log(req.body);
+    console.log(req.query);
+    // res.send(":asdas");
+    let post_id = req.query.post_id;
+    let type= req.query.type;
+    var user_promise = importantMethods.currentUser(req); 
+    
+    user_promise.then(function(user){
+       post_promise = models.Post.findAll({
+            where:{
+                id: post_id
+            }
+       });
+
+       post_promise.then(function(posts){
+            if(posts.length>0){
+                let post = posts[0];
+                like_promise = models.Like.findAll({
+                    where:{
+                        parent_id: post.id,
+                        user_id: user.id,
+                        type: type
+                    }
+                });
+
+                like_promise.then(function(likes){
+                    if(likes.length == 0){
+                        models.Like.create({
+                            user_id: user.id,
+                            parent_id: post.id,
+                            type: 'like'
+                        }).then(function(like){
+                            res.send({like: true,error: false})
+                        });
+
+                    }else{
+
+                       let like = likes[0];
+                        // like.destroy().on('success',function(u){
+                        //     if (u && u.deletedAt) {
+                        //         res.send({like: false,error: false});
+                        //     }
+                        //     else{
+                        //         res.send({like: false,error: true});
+                        //     }
+                        // }).on('error',function(){
+                        //     res.send({like: false,error: true});
+                        // });
+
+                        like.destroy(function(err) {
+                            if(err) {
+                                res.send({like: false,error: true});
+                            }
+                          }                           
+                        ).then(function(like){
+                            console.log(like);
+                            res.send({like: false,error: false});
+                        });
+                    }
+                })
+
+            }
+       });
+    })
+
 });
 
 

@@ -11,7 +11,11 @@ module.exports = (sequelize, DataTypes) => {
     Post.belongsTo(models.User, {
       foreignKey: 'user_id',
       as: 'user'
-  })
+    })
+    Post.hasMany(models.Like,{
+      as: 'likes',
+      foreignKey: 'parent_id'
+    })
   };
   return Post;
 };

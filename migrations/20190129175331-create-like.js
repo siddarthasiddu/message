@@ -14,7 +14,7 @@ module.exports = {
       type: {
         type: Sequelize.STRING
       },
-      parent_id: {
+      parent_id: { //post_id
         type: Sequelize.INTEGER
       },
       createdAt: {

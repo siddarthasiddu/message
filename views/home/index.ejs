@@ -47,7 +47,7 @@
                 <div class="fb-textarea form-group ">
                   <textarea type="textarea" class="form-control" name="post_body" id="textarea-1548844754498" placeholder="post content"></textarea>
                 </div>
-                <input type="submit" value="Create Post" onclick="msg()" class="btn" style="background-color: #24292E;color:white">
+                <input type="submit" value="Create Post" onclick="msg()" class="btn btn-success" style="color:white">
               </div>
             </form>
           </div>
@@ -69,7 +69,7 @@
               <% for(var i=0;i<friends_row.length;i++){ %>
                 <% var friend = friends_row[i].myfriend %>
                 <!-- <div><%= friend.username +"   "+friend.email +"   "+friend.id %></div> -->
-                <div>
+                <div> 
                   <a href="<%= '/chat/' + friend.username %>"><%= friend.username %></a>  
                 </div>
               <% } %>
@@ -113,6 +113,30 @@
         background-color: #F6F8FA;
         padding-top:15px;
 
+      }
+      .like{
+        background-color:  white;
+        width: 95%;
+        border: 0px;
+        font-size: 1.11em;
+      }
+      .comment{
+        background-color:  white;
+        width: 95%;
+        border: 0px;
+        font-size: 1.11em;
+      }
+      .likecommentparent{
+        text-align: center;
+        
+      }
+      .active{
+        color: #007bff !important; 
+      }
+      .likedCommentCount{
+        height: 20px;
+        margin-top: 10px;
+        color: #007bff;
       }
     </style>
   </body>

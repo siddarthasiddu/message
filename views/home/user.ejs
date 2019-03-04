@@ -60,13 +60,16 @@
               <h4>Friends</h4>
             </div>
           </div>
-          <div id="friend_related" class="" style="margin-top:15px">
+          <div id="friend_related" >
+            <!-- <% if(is_friend){ %>
+              <button style="width:100%;margin-top:15px" class="btn btn-danger" >UnFriend</button>
+            <% }else{ %>
             <% if(current_user.username != user.username){ %> 
-              <button style="width:100%" class="btn btn-dark">Send Friend Request </button>
-            <% } %>
+              <button style="width:100%;margin-top:15px" class="btn btn-success" >Send Friend Request</button>
+            <% }} %> -->
           </div>
         </div>
-        <div id="userPostsList" style="">
+        <div id="userPostsList" style="width:100%">
 
         </div>
       </div>
@@ -78,6 +81,7 @@
     <script src="/static/js/index.js"></script>
     <script src="/static/js/user_profile.js"></script>
     <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+
     <style>
       .leftpane {
         height: 100%;
