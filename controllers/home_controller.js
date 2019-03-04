@@ -309,5 +309,44 @@ HomeRoutes.get('/likepost',function(req,res){
 
 });
 
+HomeRoutes.get('/comment',function(req,res){
+    let post_id = req.query.post_id;
+    
+    comments_promise = models.Comment.findAll({
+        where:{
+            post_id: post_id
+        },
+        include: [{
+            model: models.User,
+            as: 'user'
+        }]
+    });
+
+    comments_promise.then(function(comments){
+        res.send(comments);
+    });
+});
+
+HomeRoutes.post('/comment',function(req,res){
+    let post_id = req.body.post_id;
+    let commentString = req.body.comment;
+    console.log(req.body.comment);
+    console.log(post_id+"    "+commentString);
+    res.send("asd");
+
+    models.Comment.create({
+        user_id: req.session.user_id,
+        post_id: post_id,
+        content: commentString
+    }).then(function(like){
+        res.send({success: true});
+    }).error(function(e){
+        res.send({success: false});
+    });
+
+});
+
+
+
 
 module.exports = {"HomeRoutes" : HomeRoutes};
