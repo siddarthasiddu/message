@@ -21,6 +21,9 @@ function appendPosts(response){
   var htmlcontent = ""
   var posts = response[0];
   var currentuser_id = response[1].currentuser_id;
+
+  var options = {  year: 'numeric', month: 'long', day: 'numeric',hour: 'numeric',minute: 'numeric',second: 'numeric' };
+
   
   for(var i=0;i<posts.length;i++){
     var post = posts[i];
@@ -35,7 +38,8 @@ function appendPosts(response){
         liked_class = "active";       
       }
     }
-
+    var d = post.createdAt;
+    d =  new Date(d);
     postcontent = ` <div id="userprofile" class="" style="background-color:white;width:100%;margin:10 auto;;border: 1px solid #e1e4e8;padding:15px 15px 8px 15px;">    
     <div class="row" style="margin-bottom:15px">
       <div>
@@ -43,10 +47,10 @@ function appendPosts(response){
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj5GtJ1ndkXb1l4QSGefsh4DRrW7VHFNNBZI6wqXrU8kDmJxex" class="rounded" />
           </div>
       </div>
-        
+       
       <div>
-          <div style="font-weight: 600">${user.username}</div>
-          <div style="font-size:10px"> ${post.createdAt.toLocaleString()}</div>
+          <div style="font-weight: 600"><a href="/user/${user.username}">${user.username}</a></div>
+          <div style="font-size:10px"> ${d.toLocaleString("en-US",options)}</div>   
       </div>
     
       
@@ -172,7 +176,7 @@ function pressComment(self,post_id){
               
             <div style="width:80%;background:#F2F3F5;border-radius:15px">
               <div style="margin: 10px 10px 10px 10px">
-                <span style="color:blue">${response[i].user.username}</span> ${response[i].content}
+                <a style="color:blue;color:#007bff;font-weight:600" href="/user/${response[i].user.username}">${response[i].user.username}</a> ${response[i].content}
               </div>   
             </div>
           </div>

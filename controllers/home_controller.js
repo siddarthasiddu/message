@@ -18,7 +18,7 @@ HomeRoutes.get('/',function(req,res){
     var user_promise = importantMethods.currentUser(req);
     user_promise.then(function(user){
         friends_promise.then(function(friends){
-            console.log("ljsdhfjkshdfjkhsdjkfhasjkdfhjkasdhfhsfd");
+            // console.log("ljsdhfjkshdfjkhsdjkfhasjkdfhjkasdhfhsfd");
             var friends_arr = [];
             res.render('home/index',{user_email: email,user: user,friends_row: friends});
         });
@@ -35,7 +35,7 @@ HomeRoutes.get('/chat/:username',function(req,res){
         users[1] = req.params.username;
 
         var channelHash = importantMethods.channelHash(users);
-        console.log("channel hash "+channelHash+"      "+users[0]+"     "+users[1]);
+        // console.log("channel hash "+channelHash+"      "+users[0]+"     "+users[1]);
 
         socketHelper.create_chat_channel(channelHash);
         
@@ -83,14 +83,14 @@ HomeRoutes.get('/user/:username',function(req,res){
 });
 
 HomeRoutes.post('/createpost',function(req,res){
-    console.log("**************************");
-    console.log(req.session.email);
-    console.log("**************************");
+    // console.log("**************************");
+    // console.log(req.session.email);
+    // console.log("**************************");
     var user_promise = importantMethods.currentUser(req);
     user_promise.then(function(user){
-        console.log(req.body);
-        console.log("title+ "+ req.body.post_title);
-        console.log("content+ "+ req.body.post_body);
+        // console.log(req.body);
+        // console.log("title+ "+ req.body.post_title);
+        // console.log("content+ "+ req.body.post_body);
         models.Post.create({
             user_id: user.id,
             content: req.body.post_body,
@@ -106,16 +106,16 @@ HomeRoutes.post('/createpost',function(req,res){
 
 HomeRoutes.get('/getFriendsPost',function(req,res){
     var index = req.params.index;
-    console.log(" index  "+req.params.index);
+    // console.log(" index  "+req.params.index);
     var user_promise
 });
 
 HomeRoutes.get('/getUserPost',function(req,res){
     var username = req.query.username;
     var index = req.query.index;
-    console.log("**************************");
-    console.log(req.query);
-    console.log("***************");
+    // console.log("**************************");
+    // console.log(req.query);
+    // console.log("***************");
     var limit = 10;
     var offset = limit * (index - 1);
     // var user_id = req.session.user_id;
@@ -150,9 +150,9 @@ HomeRoutes.get('/getUserPost',function(req,res){
 HomeRoutes.get('/getHomePagePosts',function(req,res){
     var currentuser_id = req.session.user_id;
     var index = req.query.index;
-    console.log("**************************");
-    console.log(req.query);
-    console.log("***************");
+    // console.log("**************************");
+    // console.log(req.query);
+    // console.log("***************");
     var limit = 10;
     var offset = limit * (index - 1);
     var user_id = req.session.user_id;
@@ -179,14 +179,12 @@ HomeRoutes.get('/getHomePagePosts',function(req,res){
                 model: models.Like,
                 as: 'likes',
                 // on: { '$Post.id$' : {$col: 'Like.parent_id'}}
-            }]
+            }],
+            order: [['updatedAt','DESC']]
         });
 
         post_promise.then(function(posts){
-            // res.send(posts);
-            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
-            console.log(posts);
-            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
+
             res.send([posts,{currentuser_id: currentuser_id}]);
         })
     });
@@ -194,10 +192,7 @@ HomeRoutes.get('/getHomePagePosts',function(req,res){
 
 HomeRoutes.get('/search',function(req,res){
     var search_query_name = req.query.keyword;
-    // console.log("*********************************")
-    // console.log(req.body);
-    // console.log(req.query);
-    // console.log("*********************************")
+
     var search_results_promise = models.User.findAll({
         where: {
             $or: [
@@ -241,10 +236,7 @@ HomeRoutes.get('/search',function(req,res){
 });
 
 HomeRoutes.get('/likepost',function(req,res){
-    console.log(req);
-    console.log(req.body);
-    console.log(req.query);
-    // res.send(":asdas");
+
     let post_id = req.query.post_id;
     let type= req.query.type;
     var user_promise = importantMethods.currentUser(req); 
@@ -297,7 +289,7 @@ HomeRoutes.get('/likepost',function(req,res){
                             }
                           }                           
                         ).then(function(like){
-                            console.log(like);
+                            // console.log(like);
                             res.send({like: false,error: false});
                         });
                     }
@@ -330,8 +322,8 @@ HomeRoutes.get('/comment',function(req,res){
 HomeRoutes.post('/comment',function(req,res){
     let post_id = req.body.post_id;
     let commentString = req.body.comment;
-    console.log(req.body.comment);
-    console.log(post_id+"    "+commentString);
+    // console.log(req.body.comment);
+    // console.log(post_id+"    "+commentString);
     res.send("asd");
 
     models.Comment.create({
