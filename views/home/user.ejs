@@ -61,12 +61,12 @@
             </div>
           </div>
           <div id="friend_related" >
-            <!-- <% if(is_friend){ %>
-              <button style="width:100%;margin-top:15px" class="btn btn-danger" >UnFriend</button>
+            <% if(is_friend){ %>
+              <button style="width:100%;margin-top:15px" class="btn btn-danger" onclick="unfollow(<%= user.id %>)">UnFollow</button>
             <% }else{ %>
             <% if(current_user.username != user.username){ %> 
-              <button style="width:100%;margin-top:15px" class="btn btn-success" >Send Friend Request</button>
-            <% }} %> -->
+              <button style="width:100%;margin-top:15px" class="btn btn-success" onclick="follow(<%= user.id %>)">Follow</button>
+            <% }} %>
           </div>
         </div>
         <div id="userPostsList" style="width:100%">

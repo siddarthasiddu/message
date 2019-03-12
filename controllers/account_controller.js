@@ -19,9 +19,7 @@ accountRoutes.get('/login',function(req,res){
 });
 
 accountRoutes.post('/login',function(req,res){
-    //  
-    //  
-    //
+
       
     var matched_users_promise = models.User.findAll({
         where: Sequelize.and(

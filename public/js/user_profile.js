@@ -77,3 +77,54 @@ function getPostData(){
 
 getPostData();
 index++;
+
+
+function follow(user_id){
+  $.ajax({
+    url: '/follow_request',
+    type: 'post',
+    data: {
+      user_id: user_id,
+    },
+    success: function(response){
+      console.log(response);
+      
+      if(response["success"]){
+        alert("Success");
+        location.reload();
+      }
+      else{
+        alert("failed");
+      }
+    },
+    error: function(xhr){
+
+    }
+  });
+}
+
+
+function unfollow(user_id){
+  $.ajax({
+    url: '/unfollow_request',
+    type: 'post',
+    data: {
+      user_id: user_id,
+    },
+    success: function(response){
+      console.log(response);
+
+      if(response["success"]){
+        alert("Success");
+        location.reload();
+      }
+      else{
+        alert("failed");
+      }
+      
+    },
+    error: function(xhr){
+
+    }
+  });
+}

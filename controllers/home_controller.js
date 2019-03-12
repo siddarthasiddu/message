@@ -338,6 +338,65 @@ HomeRoutes.post('/comment',function(req,res){
 
 });
 
+HomeRoutes.post('/follow_request',function(req,res){
+    let current_user_id = req.session.user_id;
+    let user_id = req.body.user_id;
+    
+
+    models.Friend.findAll({
+        where:{
+            user_id: current_user_id,
+            friend_id: user_id
+        }
+    }).then(function(friends){
+        if(friends == undefined || friends.length == 0 ){
+            models.Friend.create({
+                user_id: current_user_id,
+                friend_id: user_id
+            }).then((friend)=>{
+                res.send({success: true});
+            }).error((e)=>{
+                res.send({success: false});
+            })
+        }else{
+            res.send({success: true});
+        }
+    })
+
+});
+
+HomeRoutes.post('/unfollow_request',function(req,res){
+    let current_user_id = req.session.user_id;
+    let user_id = req.body.user_id;
+    console.log(`kdn ${current_user_id}    v  ${user_id}`);
+
+    models.Friend.findAll({
+        where:{
+            user_id: current_user_id,
+            friend_id: user_id
+        }
+    }).then(function(friends){
+        console.log("(************************)");
+        console.log(friends);
+        console.log("(************************)");
+        if(friends != undefined || friends.length > 0 ){
+            models.Friend.destroy({
+                where:{
+                    user_id: current_user_id,
+                    friend_id: user_id
+                }
+            }).then((friend)=>{
+                res.send({success: true});
+            }).error((e)=>{
+                res.send({success: false});
+            })
+        }else{
+            res.send({success: true});
+        }
+    })
+
+});
+
 
 
 
