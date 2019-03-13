@@ -31,15 +31,21 @@ HomeRoutes.get('/chat/:username',function(req,res){
     var users = [];
     userPromise = importantMethods.currentUser(req);
     userPromise.then(function(user){
-        users[0] = user.username;
-        users[1] = req.params.username;
+        users[0] = user.username; // current user
+        users[1] = req.params.username; // friend
 
         var channelHash = importantMethods.channelHash(users);
         // console.log("channel hash "+channelHash+"      "+users[0]+"     "+users[1]);
 
         socketHelper.create_chat_channel(channelHash);
-        
-        res.render('home/friendchat',{hash: channelHash,from: user.username,to: req.params.username})
+        models.User.findAll({
+            where:{
+                username: req.params.username
+            }
+        }).then((friends)=>{
+            friend = friends[0];
+            res.render('home/friendchat',{hash: channelHash,from: user.username,to: req.params.username,current_user: user,friend: friend})
+        })
     });
     
       
