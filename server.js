@@ -54,6 +54,6 @@ app.use('/',HomeRoutes.HomeRoutes);
 //   });
 // });
 
-// app.listen(port);
-http.listen(port, "127.0.0.1");
+app.listen(port);
+// http.listen(port, "127.0.0.1");
 
