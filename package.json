@@ -36,7 +36,7 @@
     "pry": "^0.8.7",
     "pryjs": "^1.0.3",
     "sequelize": "^4.42.0",
-    "socket.io": "^2.2.0"
+    "socket.io": "^2.4.0"
   },
   "devDependencies": {
     "sequelize-cli": "^5.4.0"
